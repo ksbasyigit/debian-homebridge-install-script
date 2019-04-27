@@ -4,7 +4,7 @@ apt update
 apt remove node nodejs nodejs-legacy -y
 apt install git-core libnss-mdns libavahi-compat-libdnssd-dev -y
 
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_8.x | bash -
 apt install nodejs -y
 npm install -g n
 rm /usr/local/bin/node
