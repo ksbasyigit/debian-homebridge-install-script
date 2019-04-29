@@ -1,0 +1,19 @@
+cd /root
+ apt update
+ apt remove node nodejs nodejs-legacy -y
+ apt install git-core libnss-mdns libavahi-compat-libdnssd-dev -y
+
+     curl -sL https://deb.nodesource.com/setup_8.x |  -E bash -
+     apt install nodejs -y
+     npm install -g n
+     rm /usr/local/bin/node
+     rm -rf /usr/local/lib/node_modules/npm
+     n prune
+     n 8.2.1
+     
+ apt install gcc g++ make -y
+ npm install -g node-gyp
+ git clone --branch v0.4.27 https://github.com/KhaosT/HAP-NodeJS.git
+cd HAP-NodeJS/
+ rm -rf accessories/AirConditioner_accessory.js
+ npm install
