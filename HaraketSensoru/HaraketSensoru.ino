@@ -17,7 +17,7 @@ char* mqtt_server = "192.168.16.100"; //MQTT Sunucu IPsi
 char* mqtt_name = "Haraket Sensoru"; //MQTT cihaz adı
 char* mqtt_topic = "hareketsensoru"; //MQTT iletisim konusu
 char* mqtt_ending = "/data"; //MQTT iletisim alt konusu
-int pirPin = D0;  //PIR sensörünü bağlayacağınız GPIO’yu ayarlayın
+int pirPin = 0;  //PIR sensörünü bağlayacağınız GPIO’yu ayarlayın
 bool lowPower = false; //Düşük güç kullanımı, daha yavaş uyarılar ama daha fazla pil istiyorsanız, doğru olarak ayarlayın.
 int delayTime = 2000; //SADECE DÜŞÜK GÜÇ İÇİN - tespit edilen hareketin ne kadar süreyle aktif olması gerektiği
 
@@ -112,7 +112,7 @@ void startWiFi() {
   WiFi.hostname(mqtt_name);
   Serial.println("Hazır");
   Serial.print("IP adres: ");
-  Serial.println(WiFi.yerelIP());
+  Serial.println(WiFi.localIP());
   MQTT.setServer(mqtt_server, 1883);
   MQTT.setCallback(callback);
 }
