@@ -15,6 +15,6 @@ if type mosquitto>/dev/null; then
 cd /root/HAP-NodeJS
 npm install mqtt --save
 cd accessories/
-wget http://bit.ly/2vroCYu -O MQTTMotionSensor_accessory.js
+// wget http://bit.ly/2vroCYu -O MQTTMotionSensor_accessory.js
 clear
 echo "Process Complete!"
