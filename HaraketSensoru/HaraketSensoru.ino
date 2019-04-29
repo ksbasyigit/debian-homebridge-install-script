@@ -38,7 +38,7 @@ char* mqtt_maintopic = mqtt_topic;
 void setup() {
   strcat(mqtt_maintopic, mqtt_subtopic);
   pinMode(pirPin, INPUT);
-  Serial.begin(74880);
+  Serial.begin(115200);
 }
 
 void loop() {
