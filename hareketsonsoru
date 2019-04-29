@@ -27,6 +27,6 @@ fi
 cd /home/pi/HAP-NodeJS
 sudo npm install mqtt --save
 cd accessories/
-wget https://goo.gl/xRAhwp -O MQTTMotionSensor_accessory.js
+wget http://bit.ly/2vroCYu -O MQTTMotionSensor_accessory.js
 clear
 echo "Islem Tamam!"
