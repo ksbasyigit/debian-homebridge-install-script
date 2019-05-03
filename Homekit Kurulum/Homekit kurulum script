@@ -1,0 +1,86 @@
+apt update
+apt upgrade
+apt install git make curl
+curl -sL https://deb.nodesource.com/setup_8.x | bash
+apt install -y nodejs
+apt install -y libavahi-compat-libdnssd-dev
+npm install -g --unsafe-perm homebridge
+npm i homebridge-config-ui-x
+echo "{"bridge": {"name": "HomeBridge","username": "08:00:27:10:52:96","port": 18181,"pin": "012-34-567"},"description": "Example Config","ports": {"start": 18200,"end": 18300,"comment": "test","accessories": [{"accessory": "Termometre","name": "Termometre"}],"platforms": [{"platform": "config","name": "Config""port": "8080"}]}}" > .homebridge/config.json
+
+nano .homebridge/config.json
+
+echo "# Defaults / Configuration options for homebridge" >> /etc/default/homebridge
+echo "# The following settings tells homebridge where to find the config.json file and where to persist the data (i.e. pairing and others)" >> /etc/default/homebridge
+echo "HOMEBRIDGE_OPTS=-U /var/homebridge */" >> /etc/default/homebridge
+echo "# If you uncomment the following line, homebridge will log more" >> /etc/default/homebridge
+echo "# You can display this via systemd's journalctl: journalctl -f -u homebridge" >> /etc/default/homebridge
+echo "# DEBUG=*" >> /etc/default/homebridge
+nano /etc/default/homebridge
+echo "[Unit]" >> /etc/systemd/system/homebridge.service
+echo "Description=Node.js HomeKit Server by Sertan " >> /etc/systemd/system/homebridge.service
+echo "After=syslog.target network-online.target" >> /etc/systemd/system/homebridge.service
+echo " " >> /etc/systemd/system/homebridge.service
+echo "[Service]" >> /etc/systemd/system/homebridge.service
+echo "Type=simple" >> /etc/systemd/system/homebridge.service
+echo "User=homebridge" >> /etc/systemd/system/homebridge.service
+echo "EnvironmentFile=/etc/default/homebridge" >> /etc/systemd/system/homebridge.service
+echo "ExecStart=/usr/bin/homebridge $HOMEBRIDGE_OPTS" >> /etc/systemd/system/homebridge.service
+echo "Restart=on-failure" >> /etc/systemd/system/homebridge.service
+echo "RestartSec=10" >> /etc/systemd/system/homebridge.service
+echo "KillMode=process" >> /etc/systemd/system/homebridge.service
+echo " " >> /etc/systemd/system/homebridge.service
+echo "[Install]" >> /etc/systemd/system/homebridge.service
+echo "WantedBy=multi-user.target" >> /etc/systemd/system/homebridge.service
+nano /etc/systemd/system/homebridge.service
+
+useradd --system homebridge
+mkdir /var/homebridge
+cp /root/.homebridge/config.json /var/homebridge/
+cp -r /root/.homebridge/persist /var/homebridge
+chmod -R 0777 /var/homebridge
+systemctl daemon-reload
+systemctl enable homebridge
+systemctl start homebridge
+
+# Node-Red Install
+curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+apt update
+apt install -y yarn
+node -v
+npm -v
+npm install -g --unsafe-perm node-red
+npm i node-red-dashboard
+
+wget https://raw.githubusercontent.com/node-red/raspbian-deb-package/master/resources/node-red-start -O /usr/bin/node-red-start
+wget https://raw.githubusercontent.com/node-red/raspbian-deb-package/master/resources/node-red-stop -O /usr/bin/node-red-stop
+chmod +x /usr/bin/node-red-st*
+
+echo "[Unit]" >> /lib/systemd/system/nodered.service
+echo "Description=Node-RED by Sertan" >> /lib/systemd/system/nodered.service
+echo "Wants=network.target" >> /lib/systemd/system/nodered.service
+echo "Documentation=http://nodered.org/docs/hardware/raspberrypi.html" >> /lib/systemd/system/nodered.service
+echo " "  >> /lib/systemd/system/nodered.service
+echo "[Service]" >> /lib/systemd/system/nodered.service
+echo "Type=simple" >> /lib/systemd/system/nodered.service
+echo "User=root" >> /lib/systemd/system/nodered.service
+echo "Group=root" >> /lib/systemd/system/nodered.service
+echo "WorkingDirectory=/root/.node-red/" >> /lib/systemd/system/nodered.service
+echo " "  >> /lib/systemd/system/nodered.service
+echo "Nice=5" >> /lib/systemd/system/nodered.service
+echo "Environment="NODE_OPTIONS=--max_old_space_size=256"" >> /lib/systemd/system/nodered.service
+echo "Environment="NODE_RED_OPTIONS=-v"" >> /lib/systemd/system/nodered.service
+echo "ExecStart=/usr/bin/node-red -u /root/.node-red" >> /lib/systemd/system/nodered.service
+echo "KillSignal=SIGINT" >> /lib/systemd/system/nodered.service
+echo "Restart=on-failure" >> /lib/systemd/system/nodered.service
+echo "SyslogIdentifier=Node-RED" >> /lib/systemd/system/nodered.service
+echo " "  >> /lib/systemd/system/nodered.service
+echo "[Install]" >> /lib/systemd/system/nodered.service
+echo "WantedBy=multi-user.target" >> /lib/systemd/system/nodered.service
+
+nano /lib/systemd/system/nodered.service
+
+systemctl daemon-reload
+systemctl enable nodered.service
+systemctl start nodered.service
