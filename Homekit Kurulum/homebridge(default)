@@ -1,0 +1,6 @@
+# Defaults / Configuration options for homebridge" >> /etc/default/homebridge
+# The following settings tells homebridge where to find the config.json file and where to persist the data (i.e. pairing and others)" >> /etc/default/homebridge
+HOMEBRIDGE_OPTS=-U /var/homebridge */" >> /etc/default/homebridge
+# If you uncomment the following line, homebridge will log more" >> /etc/default/homebridge
+# You can display this via systemd's journalctl: journalctl -f -u homebridge" >> /etc/default/homebridge
+# DEBUG=*" >> /etc/default/homebridge
