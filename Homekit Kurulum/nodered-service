@@ -1,0 +1,21 @@
+[Unit]
+Description=Node-RED by Sertan
+Wants=network.target
+Documentation=http://nodered.org/docs/hardware/raspberrypi.html
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/root/.node-red/
+
+Nice=5
+Environment="NODE_OPTIONS=--max_old_space_size=256"
+Environment="NODE_RED_OPTIONS=-v"
+ExecStart=/usr/bin/node-red -u /root/.node-red
+KillSignal=SIGINT
+Restart=on-failure
+SyslogIdentifier=Node-RED
+
+[Install]
+WantedBy=multi-user.target
