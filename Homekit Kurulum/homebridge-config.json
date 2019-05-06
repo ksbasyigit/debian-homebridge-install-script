@@ -5,19 +5,11 @@
 		"port": 18181,
 		"pin": "012-34-567"
 	},
-	"description": "Example Config",
-	"ports": {
-		"start": 18200,
-		"end": 18300,
-		"comment": "test",
-		"accessories": [{
-			"accessory": "Termometre",
-			"name": "Termometre"
-		}],
-		"platforms": [{
-			"platform": "config",
-			"name": "Config",
-			"port": "8080"
-		}]
-	}
+
+	"platforms": [{
+	 	"platform": "config",
+		"name": "Config",
+		"port": "8080"
+	}]
+	
 }
