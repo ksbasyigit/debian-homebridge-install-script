@@ -13,13 +13,14 @@ curl -sL http://bit.ly/2VTcheQ > /etc/default/homebridge
 
 curl -sL http://bit.ly/2vHPDXQ > /etc/systemd/system/homebridge.service
 
-homebridge
-
 useradd --system homebridge
 mkdir /var/homebridge
 cp /root/.homebridge/config.json /var/homebridge/
 cp -r /root/.homebridge/persist /var/homebridge
 chmod -R 0777 /var/homebridge
+
+homebridge
+
 systemctl daemon-reload
 systemctl enable homebridge
 systemctl start homebridge
